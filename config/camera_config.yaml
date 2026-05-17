@@ -1,0 +1,49 @@
+# Camera configuration for SO-ARM101 setup on AGX Orin
+
+wrist_camera:
+  device_id: 2                 # /dev/video2  — mounted on end-effector
+  width: 640
+  height: 480
+  fps: 30
+  name: wrist_cam
+  rotate_180: true
+  flip_horizontal: false
+  flip_vertical: false
+  # Intrinsics (calibrate with calibrate.py)
+  fx: 610.0
+  fy: 610.0
+  cx: 320.0
+  cy: 240.0
+  distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+stand_camera:
+  device_id: 0                 # /dev/video0  — fixed overhead/side view
+  width: 640
+  height: 480
+  fps: 30
+  name: stand_cam
+  rotate_180: true
+  flip_horizontal: false
+  flip_vertical: false
+  fx: 610.0
+  fy: 610.0
+  cx: 320.0
+  cy: 240.0
+  distortion: [0.0, 0.0, 0.0, 0.0, 0.0]
+  # Extrinsics: pose of stand-cam in robot base frame (metres + rpy radians)
+  # Calibrate with calibrate.py
+  T_base_cam:                  # 4x4 transform, row-major
+    - [1.0, 0.0, 0.0, 0.40]
+    - [0.0, 1.0, 0.0, 0.00]
+    - [0.0, 0.0, 1.0, 0.50]
+    - [0.0, 0.0, 0.0, 1.00]
+
+# Policy observation image size (resize before inference)
+obs_image_size: [96, 96]
+
+# Orange HSV detection thresholds
+orange_hsv:
+  lower: [5, 120, 80]
+  upper: [25, 255, 255]
+  min_area_px: 400             # minimum blob area (pixels²)
+  max_area_px: 40000

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environment and local tooling
+.venv/
+venv/
+.python-version
+.vscode/
+
+# Datasets and model artifacts
+datasets/
+checkpoints/
+*.npz
+*.pth
+*.pt
+
+# Logs and generated media
+*.log
+*.png
+*.jpg
+*.jpeg
+*.avi
+*.mp4
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,29 @@
+# Jetson AGX Orin — SO-ARM101 Diffusion Policy dependencies
+# Install: pip install -r requirements.txt
+
+# Core
+numpy>=1.26
+opencv-python>=4.8
+PyYAML>=6.0
+pyserial>=3.5
+
+# Deep learning (torch 2.3 + CUDA 12.2 already on Orin)
+# torch is pre-installed — do NOT reinstall from pip (would override JetPack build)
+# torchvision is needed — install the JetPack-compatible wheel:
+#   pip install torchvision --index-url https://developer.download.nvidia.com/compute/redist/jp/v61
+
+# Vision
+Pillow>=10.0
+
+# Optional: YOLOv8 for better orange detection
+# ultralytics>=8.0
+
+# Optional: ikpy for full IK solver
+# ikpy>=3.3
+
+# Training utilities
+tensorboard>=2.14
+tqdm>=4.66
+
+# Data
+matplotlib>=3.8

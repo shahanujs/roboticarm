@@ -1,0 +1,67 @@
+# SO-ARM101 from Hiwonder – Feetech STS/SCS Bus Servo Configuration
+# Confirmed mapping on this setup:
+#   /dev/ttyACM0 -> arm chain + gripper
+#   arm joint IDs: 1..5
+#   gripper ID: 6
+
+arm:
+  port: /dev/ttyACM0
+  baudrate: 1000000
+  protocol_version: 0          # 0=SCS, 1=STS
+  active_dof: 4                # keep wrist_roll fixed during Cartesian control
+  joints:
+    - id: 1
+      name: base_rotation
+      min_pos: 0
+      max_pos: 4095
+      home_pos: 2048
+      deg_min: -150.0
+      deg_max:  150.0
+    - id: 2
+      name: shoulder
+      min_pos: 0
+      max_pos: 4095
+      home_pos: 2048
+      deg_min: -90.0
+      deg_max:  90.0
+    - id: 3
+      name: elbow
+      min_pos: 0
+      max_pos: 4095
+      home_pos: 2048
+      deg_min: -135.0
+      deg_max:  135.0
+    - id: 4
+      name: wrist_pitch
+      min_pos: 0
+      max_pos: 4095
+      home_pos: 2048
+      deg_min: -90.0
+      deg_max:  90.0
+    - id: 5
+      name: wrist_roll
+      min_pos: 0
+      max_pos: 4095
+      home_pos: 2048
+      deg_min: -180.0
+      deg_max:  180.0
+gripper:
+  port: /dev/ttyACM0
+  baudrate: 1000000
+  id: 6
+  open_pos: 2400
+  close_pos: 1600
+  grasp_force: 300             # position error threshold for grasp detection
+
+# Workspace limits (metres, robot base frame)
+workspace:
+  x: [-0.05, 0.45]
+  y: [-0.30, 0.30]
+  z: [0.00, 0.40]
+
+# DH parameters for SO-ARM101 (approximate, tune with calibration)
+kinematics:
+  link_lengths: [0.0, 0.1285, 0.0, 0.1240, 0.0, 0.0615]
+  d:            [0.1025, 0.0, 0.0, 0.0, 0.0, 0.0]
+  alpha:        [1.5708, 0.0, 1.5708, -1.5708, 1.5708, 0.0]
+  theta_offset: [0.0, -1.5708, 0.0, -1.5708, 0.0, 0.0]
