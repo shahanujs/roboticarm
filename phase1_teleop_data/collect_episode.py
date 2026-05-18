@@ -16,7 +16,7 @@ from __future__ import annotations
 import argparse
 import sys
 import time
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import cv2
@@ -100,7 +100,7 @@ class StandaloneCollector:
         self._output_path.parent.mkdir(parents=True, exist_ok=True)
         f = h5py.File(str(self._output_path), "w")
         f.attrs["schema_version"] = "1.0"
-        f.attrs["created_utc"] = datetime.now(UTC).isoformat()
+        f.attrs["created_utc"] = datetime.now(timezone.utc).isoformat()
         f.attrs["target_hz"] = TARGET_HZ
         f.attrs["image_shape_hwc"] = [h, w, c]
         f.attrs["joint_count"] = EXPECTED_JOINT_COUNT
