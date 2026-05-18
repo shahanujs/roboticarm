@@ -1,0 +1,20 @@
+node:
+  name: teleop_hdf5_collector
+  target_hz: 30.0
+  slop_sec: 0.025
+  queue_size: 200
+  flush_every_n: 50
+  output_path: ./datasets/teleop_episode_001.hdf5
+  expected_joint_count: 7
+  expected_action_dim: 7
+
+topics:
+  image: /camera/image_raw
+  joint_state: /joint_states
+  action: /teleop/expert_actions
+
+image:
+  allowed_encodings:
+    - rgb8
+    - bgr8
+    - mono8

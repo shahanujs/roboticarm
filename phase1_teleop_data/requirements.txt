@@ -1,0 +1,5 @@
+rclpy>=3.3.0
+sensor_msgs_py>=4.0.0
+h5py>=3.10.0
+numpy>=1.24.0
+PyYAML>=6.0.0
