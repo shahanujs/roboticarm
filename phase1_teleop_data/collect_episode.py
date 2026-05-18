@@ -14,6 +14,7 @@ Press Ctrl+C to stop and finalize the dataset file.
 from __future__ import annotations
 
 import argparse
+import signal
 import sys
 import time
 from datetime import datetime, timezone
@@ -218,6 +219,12 @@ class StandaloneCollector:
 
     def run(self) -> None:
         """Start camera and record until Ctrl+C."""
+        # Use a flag so SIGINT (Ctrl+C) always works even when cap.read() blocks
+        self._running = True
+        def _stop(sig, frame):
+            self._running = False
+        signal.signal(signal.SIGINT, _stop)
+        signal.signal(signal.SIGTERM, _stop)
         print(f"\nStarting camera (index {CAMERA_INDEX})...")
         self._cap = cv2.VideoCapture(CAMERA_INDEX)
         if not self._cap.isOpened():
@@ -241,7 +248,7 @@ class StandaloneCollector:
         self._start_time = time.time()
 
         try:
-            while True:
+            while self._running:
                 loop_start = time.time()
 
                 ret, frame = self._cap.read()
@@ -262,10 +269,8 @@ class StandaloneCollector:
                 if sleep_time > 0:
                     time.sleep(sleep_time)
 
-        except KeyboardInterrupt:
-            print(f"\nStopped. Finalizing {self._size} samples...")
-
         finally:
+            print(f"\nStopped. Finalizing {self._size} samples...")
             if self._cap is not None:
                 self._cap.release()
             if self._h5 is not None:
